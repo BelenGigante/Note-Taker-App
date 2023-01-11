@@ -27,11 +27,15 @@ const uui = () => {
 };
 app.post('/api/notes', (req,res) => {
     const data = fs.readFileSync('./db/db.json','utf8');
-    const reminders = JSON.parse(data);
+    const remindersPar = JSON.parse(data);
     const newReminder = {
         ...req.body,
         id: uui()
     };
+    remindersPar.push(newReminder);
+    const  remindersStr = JSON.stringify(notes,null,2);
+    fs.writeFileSync('./bd/bd.json', remindersStr);
+    res.json('Reminder Saved');
 })
 
 app.listen(PORT);
