@@ -24,31 +24,29 @@ app.get('/api/notes', (req,res) =>{
     res.json(remindersPar);
 });
 
-const uui = () => {
-    return Math.floor((1+ Math.random()) * 0x10000)
-    .toString(16)
-    .substring(1);
-};
+// const uui = () => {
+//     return Math.floor((1+ Math.random()) * 0x10000).toString(16).substring(1);
+// };
 app.post('/api/notes', (req,res) => {
     const data = fs.readFileSync('./db/db.json','utf8');
     const remindersPar = JSON.parse(data);
     const newReminder = {
         ...req.body,
-        reminderId: uui()
+        //reminderId: uui()
     };
     remindersPar.push(newReminder);
-    const  remindersStr = JSON.stringify(notes,null,2);
-    fs.writeFileSync('./bd/bd.json', remindersStr);
+    const  remindersStr = JSON.stringify(remindersPar,null,2);
+    fs.writeFileSync('./db/db.json', remindersStr);
     res.json('Reminder Saved');
 });
 
-app.delete('/api/notes/:reminderId',(req,res) =>{
-    const data = fs.readFileSync('./db/db.json','utf8');
-    // const remindersPar = JSON.parse(data).filter(note=> note.id === req.params.reminderId);
-    const  remindersStr = JSON.stringify(notes,null,2);
-    fs.writeFileSync('./db/db.json', remindersStr);
-    res.json('Reminder Deleted');
-});
+// app.delete('/api/notes/:reminderId',(req,res) =>{
+//     const data = fs.readFileSync('./db/db.json','utf8');
+//     // const remindersPar = JSON.parse(data).filter(note=> note.id === req.params.reminderId);
+//     const  remindersStr = JSON.stringify(notes,null,2);
+//     fs.writeFileSync('./db/db.json', remindersStr);
+//     res.json('Reminder Deleted');
+// });
 
 
 app.listen(PORT);
